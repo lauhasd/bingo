@@ -1,33 +1,132 @@
+
+:root {
+  --card-size: 6cm;
+}
+
+button {
+  padding: 0;
+  border: none;
+  font: inherit;
+  color: inherit;
+  background-color: transparent;
+  cursor: pointer;
+}
+
 .App {
-  text-align: center;
+    margin: 0 auto;
+    width: 210mm;
+    max-width: 100%;
+    text-align: center;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 40vmin;
-  pointer-events: none;
+.editor {
+    margin: 1em 0;
+    line-height: 22px;
+    vertical-align: middle;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.editor input {
+    margin: 1em;
+    width: 4em;
+    border-radius: 3px;
+    border: 1px solid #779ecb;
+    padding: 6px 12px;
 }
 
-.App-link {
-  color: #61dafb;
+.editor button {
+    border-radius: 3px;
+    border: 1px solid #779ecb;
+    background-color: #779ecb;
+    padding: 6px 12px;
+    color: white;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.editor button.disabled,
+.editor button.disabled:hover {
+    cursor: default;
+    background-color: #ddd;
+}
+
+.editor button:hover {
+    border-radius: 3px;
+    border: 1px solid #87aedb;
+    background-color: #87aedb;
+    padding: 6px 12px;
+    color: white;
+}
+
+.card {
+    display: inline-block;
+    margin: 10px;
+    border-radius: 3px;
+    border: 1px solid grey;
+    height: var(--card-size);
+    width: var(--card-size);
+
+    font-size: 20px;
+}
+
+.card .row {
+    display: block;
+    box-sizing: border-box;
+
+    margin: 0;
+    height: calc(var(--card-size) / 6);
+    border-bottom: 1px solid #ddd;
+}
+
+.row:last-child {
+    border-bottom: none;
+}
+
+.card .row.title-row {
+    font-weight: bold;
+    border-bottom: 1px solid grey;
+    background-color: #779ecb;
+}
+
+.card .row .block {
+    display: inline-block;
+    box-sizing: border-box;
+
+    margin: 0;
+    width: 100%;
+    max-width: calc(var(--card-size) / 5);
+    min-height: 100%;
+
+    border-right: 1px solid #ddd;
+}
+
+.title-row .block, .title-row .block span {
+    border: none !important;
+    color: white !important;
+}
+
+.card .row .block:last-child {
+    border-right: none;
+}
+
+.block span {
+  line-height: calc(var(--card-size) / 6);
+  vertical-align: middle;
+  color: #333;
+}
+
+.block.free span {
+  line-height: calc(var(--card-size) / 6);
+  vertical-align: middle;
+  color: #666;
+  font-size: 12px;
+  text-transform: uppercase;
+}
+
+@page {
+  size: A4;
+  margin: 24px 0;
+}
+
+@media print {
+    .editor {
+        display: none;
+    }
 }
