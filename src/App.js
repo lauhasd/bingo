@@ -16,6 +16,7 @@ class App extends Component {
         [...Array(maxNumbers).keys()].map(k => k + 1),
         maxNumbers / 5
       ),
+      usedRows: new Set(),  // the keys are rows as a string
     };
   }
 
@@ -24,13 +25,15 @@ class App extends Component {
   }
 
   generateCards() {
-    // TODO:
-    // - make sure every row is unique - test this later, should be fixed now
-    const { cardCount, numbers, cards: oldCards } = this.state,
+    const { cards: oldCards, cardCount, numbers, usedRows } = this.state,
           newCardCountDiff = cardCount - oldCards.length;
 
     if (newCardCountDiff <= 0) {
-      this.setState({cards: _.dropRight(oldCards, Math.abs(newCardCountDiff))});
+      this.setState({
+        cards: _.dropRight(oldCards, Math.abs(newCardCountDiff)),
+        usedRows: new Set(_.dropRight([...usedRows], Math.abs(newCardCountDiff) * 5))
+      });
+
       return;
     }
 
@@ -38,12 +41,11 @@ class App extends Component {
 
     cards = cards.map(card => {
         let rows = Array(5).fill(),
-            usedNumbers = [],
-            usedRows = new Set();
+            usedNumbers = [];
 
         return rows = rows.map(row => {
           let newRow = [];
-          while (newRow.length === 0 || usedRows.has(newRow)) {
+          while (newRow.length === 0 || usedRows.has(newRow.join())) {
             numbers.forEach(chunk => {
               let randomChoice = _.sample(chunk);
               while (usedNumbers.includes(randomChoice)) {
@@ -55,11 +57,14 @@ class App extends Component {
 
           }
 
-          usedRows.add(newRow);
+          usedRows.add(newRow.join());
           return newRow;
         });
     });
-    this.setState({cards: _.concat(oldCards, cards)});
+    this.setState({
+      cards: _.concat(oldCards, cards),
+      usedRows: usedRows,
+    });
   }
 
   updateCardCount(newCount) {
