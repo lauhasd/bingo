@@ -2,6 +2,15 @@
   --card-size: 6cm;
 }
 
+button {
+  padding: 0;
+  border: none;
+  font: inherit;
+  color: inherit;
+  background-color: transparent;
+  cursor: pointer;
+}
+
 body {
   margin: 0;
   padding: 0;
@@ -17,11 +26,46 @@ code {
     monospace;
 }
 
+.App {
+    margin: 0 auto;
+    width: 210mm;
+    max-width: 100%
+}
+
+.editor {
+    margin: 1em 0;
+    line-height: 22px;
+    vertical-align: middle;
+}
+
+.editor input {
+    margin: 1em;
+    width: 4em;
+    border-radius: 3px;
+    border: 1px solid #779ecb;
+    padding: 6px 12px;
+}
+
+.editor button {
+    border-radius: 3px;
+    border: 1px solid #779ecb;
+    background-color: #779ecb;
+    padding: 6px 12px;
+    color: white;
+}
+
+.editor button:hover {
+    border-radius: 3px;
+    border: 1px solid #87aedb;
+    background-color: #87aedb;
+    padding: 6px 12px;
+    color: white;
+}
+
 .card {
     display: inline-block;
-
     margin: 10px;
-
+    border-radius: 3px;
     border: 1px solid grey;
     height: var(--card-size);
     width: var(--card-size);
@@ -86,4 +130,10 @@ code {
 @page {
   size: A4;
   margin: 24px 0;
+}
+
+@media print {
+    .editor {
+        display: none;
+    }
 }

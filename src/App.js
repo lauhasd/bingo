@@ -6,16 +6,27 @@ import './App.css';
 class App extends Component {
   constructor(props) {
     super(props);
+    const maxNumbers = 75;
+    this.state = {
+      // Card is a 3d array containing the cards with rows and numbers
+      cards: [],
+      cardCount: 9,
+      maxNumbers: maxNumbers,
+      numbers: _.chunk(
+        [...Array(maxNumbers).keys()].map(k => k + 1),
+        maxNumbers / 5
+      ),
+    };
+  }
 
-    const maxNumbers = 75,
-          numbers = _.chunk(
-            [...Array(maxNumbers).keys()].map(k => k + 1),
-            maxNumbers / 5
-          ),
-          cardCount = 30;
+  componentDidMount() {
+    this.generateCards();
+  }
+
+  generateCards() {
+    const { cardCount, numbers } = this.state;
 
     let cards = Array(cardCount).fill();
-
     cards = cards.map(card => {
         let rows = Array(5).fill(),
             usedNumbers = [];
@@ -34,21 +45,31 @@ class App extends Component {
 
           return newRow;
         });
-
     });
 
-    this.state = {
-      // Card is a 2d array containing the numbers
-      cards: cards,
-      maxNumbers: maxNumbers,
-      numbers: numbers,
-    };
+    this.setState({cards: cards});
+  }
+
+  updateCardCount(newCount) {
+    const count = parseInt(newCount)
+    this.setState({cardCount: count}, () => {
+      if (!(isNaN(count) || count <= 0)) {
+        this.generateCards();
+      }
+    });
   }
 
   render() {
-    const { cards } = this.state;
+    const { cards, cardCount } = this.state;
     return (
       <div className="App">
+        <div className="editor">
+          How many cards to print?
+          <input onChange={(e) => this.updateCardCount(e.target.value)}
+                 type='number'
+                 value={cardCount} />
+          <button onClick={() => window.print()}>Print</button>
+        </div>
         {cards.map(card => <Card rows={card} />)}
       </div>
     );
