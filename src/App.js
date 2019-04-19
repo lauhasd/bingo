@@ -87,28 +87,28 @@ class App extends Component {
                  value={cardCount} />
           <button onClick={() => window.print()}>Print</button>
         </div>
-        {cards.map(card => <Card rows={card} />)}
+        {cards.map((card, i) => <Card key={i} rows={card} />)}
       </div>
     );
   }
 }
 
 const Card = ({ rows }) => {
-  const block = (text, extraCls="") => <div className={"block " + extraCls}><span>{text}</span></div>;
+  const block = (text, i, extraCls="") => <div key={i} className={"block " + extraCls}><span>{text}</span></div>;
   return (
     <div className="card">
       <div className="row title-row">
-        {'BINGO'.split('').map(letter => block(letter))}
+        {'BINGO'.split('').map(letter => block(letter, letter))}
       </div>
       {
         rows.map((row, rowIndex) => {
           return (
-            <div className="row">
+            <div key={rowIndex} className="row">
               {row.map((num, numIndex) => {
                 if (rowIndex === 2 && numIndex === 2) {
-                  return block('free', 'free');
+                  return block('free', numIndex,'free');
                 } else {
-                  return block(num);
+                  return block(num, numIndex);
                 }
                })
               }
