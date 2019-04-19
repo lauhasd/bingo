@@ -16,7 +16,7 @@ class App extends Component {
         [...Array(maxNumbers).keys()].map(k => k + 1),
         maxNumbers / 5
       ),
-      usedRows: new Set(),  // the keys are rows as a string
+      usedRows: new Set(),  // the keys are rows as a string, e.g. "1,2,3,4,5"
     };
   }
 
