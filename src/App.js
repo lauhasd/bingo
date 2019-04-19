@@ -7,7 +7,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     const maxNumbers = 75;
-    this.generateCards = _.debounce(this.generateCards, 1000);
+    this.generateCards = _.debounce(this.generateCards, 500);
     this.state = {
       // Card is a 3d array containing the cards with rows and numbers
       cards: [],
@@ -18,6 +18,7 @@ class App extends Component {
         maxNumbers / 5
       ),
       usedRows: new Set(),  // the keys are rows as a string, e.g. "1,2,3,4,5"
+      loading: true,
     };
   }
 
@@ -32,7 +33,8 @@ class App extends Component {
     if (newCardCountDiff <= 0) {
       this.setState({
         cards: _.dropRight(oldCards, Math.abs(newCardCountDiff)),
-        usedRows: new Set(_.dropRight([...usedRows], Math.abs(newCardCountDiff) * 5))
+        usedRows: new Set(_.dropRight([...usedRows], Math.abs(newCardCountDiff) * 5)),
+        loading: false,
       });
       return;
     }
@@ -62,12 +64,13 @@ class App extends Component {
     this.setState({
       cards: _.concat(oldCards, cards),
       usedRows: usedRows,
+      loading: false,
     });
   }
 
   updateCardCount(newCount) {
     const count = parseInt(newCount)
-    this.setState({cardCount: count}, () => {
+    this.setState({cardCount: count, loading: true}, () => {
       if (!(isNaN(count) || count <= 0)) {
         this.generateCards();
       }
@@ -75,7 +78,7 @@ class App extends Component {
   }
 
   render() {
-    const { cards, cardCount } = this.state;
+    const { cards, cardCount, loading } = this.state;
     return (
       <div className="App">
         <div className="editor">
@@ -83,7 +86,10 @@ class App extends Component {
           <input onChange={(e) => this.updateCardCount(e.target.value)}
                  type='number'
                  value={cardCount} />
-          <button onClick={() => window.print()}>Print</button>
+          <button onClick={() => window.print()}
+                  className={loading ? 'disabled' : ''}>
+            {loading ? <i class="fas fa-spinner"></i> : 'Print'}
+          </button>
         </div>
         {cards.map((card, i) => <Card key={i} rows={card} />)}
       </div>

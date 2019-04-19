@@ -35,24 +35,25 @@ button {
 
 .editor button {
     border-radius: 3px;
-    border: 1px solid #779ecb;
     background-color: #779ecb;
     padding: 6px 12px;
     color: white;
+    width: 61px;
+    height: 34px;
 }
 
 .editor button.disabled,
 .editor button.disabled:hover {
     cursor: default;
-    background-color: #ddd;
+    background-color: #bbb;
 }
 
 .editor button:hover {
-    border-radius: 3px;
-    border: 1px solid #87aedb;
     background-color: #87aedb;
-    padding: 6px 12px;
-    color: white;
+}
+
+.editor .fas {
+    -webkit-animation: rotation 2s infinite linear;
 }
 
 .card {
@@ -128,5 +129,14 @@ button {
 @media print {
     .editor {
         display: none;
+    }
+}
+
+@-webkit-keyframes rotation {
+    from {
+	    -webkit-transform: rotate(0deg);
+    }
+    to {
+	    -webkit-transform: rotate(359deg);
     }
 }
