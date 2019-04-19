@@ -56,17 +56,24 @@ class App extends Component {
 }
 
 const Card = ({ rows }) => {
-  const block = text => <div className="block"><span>{text}</span></div>;
+  const block = (text, extraCls="") => <div className={"block " + extraCls}><span>{text}</span></div>;
   return (
     <div className="card">
       <div className="row">
         {'BINGO'.split('').map(letter => block(letter))}
       </div>
       {
-        rows.map(row => {
+        rows.map((row, rowIndex) => {
           return (
             <div className="row">
-              {row.map(num => block(num))}
+              {row.map((num, numIndex) => {
+                if (rowIndex === 2 && numIndex === 2) {
+                  return block('free', 'free');
+                } else {
+                  return block(num);
+                }
+               })
+              }
             </div>
           );
         })

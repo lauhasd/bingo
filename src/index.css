@@ -40,6 +40,7 @@ code {
 
 .card .row:first-child {
     font-weight: bold;
+    border-bottom: 2px solid #666;
 }
 
 .card .row .block {
@@ -61,7 +62,18 @@ code {
 .block span {
   line-height: calc(var(--card-size) / 6);
   vertical-align: middle;
+  color: #333;
 }
+
+.block.free span {
+  line-height: calc(var(--card-size) / 6);
+  vertical-align: middle;
+  color: #666;
+  font-size: 12px;
+  text-transform: uppercase;
+}
+
+
 
 @page {
   size: A4;
