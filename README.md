@@ -1,4 +1,5 @@
 # Bingo card generator
 
-Build for github pages
-`$ npm run build-gh`
+Built on top of `create-react-app`
+
+`npm start` to start the development server
