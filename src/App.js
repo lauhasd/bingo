@@ -59,7 +59,7 @@ const Card = ({ rows }) => {
   const block = (text, extraCls="") => <div className={"block " + extraCls}><span>{text}</span></div>;
   return (
     <div className="card">
-      <div className="row">
+      <div className="row title-row">
         {'BINGO'.split('').map(letter => block(letter))}
       </div>
       {

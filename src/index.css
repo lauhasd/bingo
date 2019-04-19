@@ -1,5 +1,5 @@
 :root {
-  --card-size: 5cm;
+  --card-size: 6cm;
 }
 
 body {
@@ -38,9 +38,14 @@ code {
     border-bottom: 1px solid #ddd;
 }
 
-.card .row:first-child {
+.row:last-child {
+    border-bottom: none;
+}
+
+.card .row.title-row {
     font-weight: bold;
-    border-bottom: 2px solid #666;
+    border-bottom: 1px solid grey;
+    background-color: #779ecb;
 }
 
 .card .row .block {
@@ -53,6 +58,11 @@ code {
     min-height: 100%;
 
     border-right: 1px solid #ddd;
+}
+
+.title-row .block, .title-row .block span {
+    border: none !important;
+    color: white !important;
 }
 
 .card .row .block:last-child {
@@ -73,21 +83,7 @@ code {
   text-transform: uppercase;
 }
 
-
-
 @page {
   size: A4;
   margin: 24px 0;
-}
-
-@media print {
-  .App {
-    border: initial;
-    border-radius: initial;
-    width: initial;
-    min-height: initial;
-    box-shadow: initial;
-    background: initial;
-    page-break-after: always;
-  }
 }
