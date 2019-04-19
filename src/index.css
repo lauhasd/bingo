@@ -1,3 +1,7 @@
+:root {
+  --card-size: 5cm;
+}
+
 body {
   margin: 0;
   padding: 0;
@@ -11,4 +15,67 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
+}
+
+.card {
+    display: inline-block;
+
+    margin: 10px;
+
+    border: 1px solid grey;
+    height: var(--card-size);
+    width: var(--card-size);
+
+    font-size: 20px;
+}
+
+.card .row {
+    display: block;
+    box-sizing: border-box;
+
+    margin: 0;
+    height: calc(var(--card-size) / 6);
+    border-bottom: 1px solid #ddd;
+}
+
+.card .row:first-child {
+    font-weight: bold;
+}
+
+.card .row .block {
+    display: inline-block;
+    box-sizing: border-box;
+
+    margin: 0;
+    width: 100%;
+    max-width: calc(var(--card-size) / 5);
+    min-height: 100%;
+
+    border-right: 1px solid #ddd;
+}
+
+.card .row .block:last-child {
+    border-right: none;
+}
+
+.block span {
+  line-height: calc(var(--card-size) / 6);
+  vertical-align: middle;
+}
+
+@page {
+  size: A4;
+  margin: 24px 0;
+}
+
+@media print {
+  .App {
+    border: initial;
+    border-radius: initial;
+    width: initial;
+    min-height: initial;
+    box-shadow: initial;
+    background: initial;
+    page-break-after: always;
+  }
 }
