@@ -24,30 +24,42 @@ class App extends Component {
   }
 
   generateCards() {
-    const { cardCount, numbers } = this.state;
+    // TODO:
+    // - make sure every row is unique - test this later, should be fixed now
+    const { cardCount, numbers, cards: oldCards } = this.state,
+          newCardCountDiff = cardCount - oldCards.length;
 
-    let cards = Array(cardCount).fill();
+    if (newCardCountDiff <= 0) {
+      this.setState({cards: _.dropRight(oldCards, Math.abs(newCardCountDiff))});
+      return;
+    }
+
+    let cards = Array(newCardCountDiff).fill();
+
     cards = cards.map(card => {
         let rows = Array(5).fill(),
-            usedNumbers = [];
+            usedNumbers = [],
+            usedRows = new Set();
 
-        return rows.map(row => {
+        return rows = rows.map(row => {
           let newRow = [];
+          while (newRow.length === 0 || usedRows.has(newRow)) {
+            numbers.forEach(chunk => {
+              let randomChoice = _.sample(chunk);
+              while (usedNumbers.includes(randomChoice)) {
+                randomChoice = _.sample(chunk);
+              }
+              usedNumbers.push(randomChoice);
+              newRow.push(randomChoice);
+            });
 
-          numbers.forEach(chunk => {
-            let randomChoice = _.sample(chunk);
-            while (usedNumbers.includes(randomChoice)) {
-              randomChoice = _.sample(chunk);
-            }
-            usedNumbers.push(randomChoice);
-            newRow.push(randomChoice);
-          });
+          }
 
+          usedRows.add(newRow);
           return newRow;
         });
     });
-
-    this.setState({cards: cards});
+    this.setState({cards: _.concat(oldCards, cards)});
   }
 
   updateCardCount(newCount) {
