@@ -88,7 +88,7 @@ class App extends Component {
                  value={cardCount} />
           <button onClick={() => window.print()}
                   className={loading ? 'disabled' : ''}>
-            {loading ? <i class="fas fa-spinner"></i> : 'Print'}
+            {loading ? <i className="fas fa-spinner"></i> : 'Print'}
           </button>
         </div>
         {cards.map((card, i) => <Card key={i} rows={card} />)}
