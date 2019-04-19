@@ -7,6 +7,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     const maxNumbers = 75;
+    this.generateCards = _.debounce(this.generateCards, 1000);
     this.state = {
       // Card is a 3d array containing the cards with rows and numbers
       cards: [],
@@ -33,12 +34,10 @@ class App extends Component {
         cards: _.dropRight(oldCards, Math.abs(newCardCountDiff)),
         usedRows: new Set(_.dropRight([...usedRows], Math.abs(newCardCountDiff) * 5))
       });
-
       return;
     }
 
     let cards = Array(newCardCountDiff).fill();
-
     cards = cards.map(card => {
         let rows = Array(5).fill(),
             usedNumbers = [];
@@ -54,7 +53,6 @@ class App extends Component {
               usedNumbers.push(randomChoice);
               newRow.push(randomChoice);
             });
-
           }
 
           usedRows.add(newRow.join());
@@ -94,14 +92,17 @@ class App extends Component {
 }
 
 const Card = ({ rows }) => {
-  const block = (text, i, extraCls="") => <div key={i} className={"block " + extraCls}><span>{text}</span></div>;
+  const block = (text, i, extraCls="") => (
+    <div key={i} className={"block " + extraCls}>
+      <span>{text}</span>
+    </div>
+  );
   return (
     <div className="card">
       <div className="row title-row">
         {'BINGO'.split('').map(letter => block(letter, letter))}
       </div>
-      {
-        rows.map((row, rowIndex) => {
+      { rows.map((row, rowIndex) => {
           return (
             <div key={rowIndex} className="row">
               {row.map((num, numIndex) => {
